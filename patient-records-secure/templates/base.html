@@ -1,0 +1,38 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Patient Records</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left"><a href="{{ url_for('index') }}">Patient Records</a></div>
+    <div class="nav-right">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('patients_list') }}">Patients</a>
+        {% if current_user.role == 'admin' %}
+          <a href="{{ url_for('users_page') }}">Users</a>
+          <a href="{{ url_for('audit_page') }}">Audit</a>
+        {% endif %}
+        <span class="user">Hi, {{ current_user.name }}</span>
+        <a class="btn" href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </div>
+  </nav>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="flash {{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

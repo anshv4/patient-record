@@ -1,0 +1,19 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Audit Log (Admin)</h2>
+<table>
+  <thead><tr><th>Time (UTC)</th><th>User</th><th>Action</th><th>Resource</th><th>Metadata</th></tr></thead>
+  <tbody>
+    {% for e in logs %}
+      <tr>
+        <td>{{ e.timestamp }}</td>
+        <td>{{ e.user.email if e.user else "-" }}</td>
+        <td>{{ e.action }}</td>
+        <td>{{ e.resource_type }} #{{ e.resource_id }}</td>
+        <td><pre style="white-space: pre-wrap; margin:0;">{{ e.metadata }}</pre></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

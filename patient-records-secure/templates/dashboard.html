@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>Welcome to the secure patient record management system.</p>
+<div class="cards">
+  <a class="card" href="{{ url_for('patients_list') }}">
+    <h3>Patients</h3>
+    <p>View and manage patients</p>
+  </a>
+  {% if current_user.role == 'admin' %}
+  <a class="card" href="{{ url_for('audit_page') }}">
+    <h3>Audit Log</h3>
+    <p>Review access and change history</p>
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

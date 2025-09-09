@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Patients</h2>
+<form method="get" class="search">
+  <input type="text" name="q" placeholder="Search by name..." value="{{ q }}"/>
+  <button class="btn" type="submit">Search</button>
+  <a class="btn" href="{{ url_for('patient_new') }}">+ New Patient</a>
+</form>
+<table>
+  <thead>
+    <tr><th>Name</th><th>DOB</th><th>Gender</th><th>Phone</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for p in patients %}
+    <tr>
+      <td>{{ p.first_name }} {{ p.last_name }}</td>
+      <td>{{ p.dob }}</td>
+      <td>{{ p.gender }}</td>
+      <td>{{ decrypt(p.phone_enc) }}</td>
+      <td><a class="btn" href="{{ url_for('patient_detail', pid=p.id) }}">Open</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No patients found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

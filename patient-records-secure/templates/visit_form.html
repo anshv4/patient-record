@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>New Visit for {{ p.first_name }} {{ p.last_name }}</h2>
+<form method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="field">{{ form.visit_date.label }} {{ form.visit_date() }}</div>
+  <div class="field">{{ form.reason.label }} {{ form.reason() }}</div>
+  <div class="field">{{ form.notes.label }} {{ form.notes(rows=4) }}</div>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('patient_detail', pid=p.id) }}">Cancel</a>
+    {{ form.submit(class_="btn primary") }}
+  </div>
+</form>
+{% endblock %}

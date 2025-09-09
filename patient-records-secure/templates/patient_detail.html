@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Patient: {{ p.first_name }} {{ p.last_name }}</h2>
+<p><strong>DOB:</strong> {{ p.dob }} &nbsp; <strong>Gender:</strong> {{ p.gender }}</p>
+<p><strong>Address:</strong> {{ decrypt(p.address_enc) or "-" }}</p>
+<p><strong>Phone:</strong> {{ decrypt(p.phone_enc) or "-" }}</p>
+<p><strong>Medical History:</strong><br>{{ decrypt(p.medical_history_enc) or "-" }}</p>
+
+<div class="actions">
+  <a class="btn" href="{{ url_for('patient_edit', pid=p.id) }}">Edit</a>
+  <form method="post" action="{{ url_for('patient_delete', pid=p.id) }}" onsubmit="return confirm('Delete patient? This cannot be undone.')">
+    <button class="btn danger" type="submit">Delete</button>
+  </form>
+</div>
+
+<h3>Visits</h3>
+<a class="btn" href="{{ url_for('visit_new', pid=p.id) }}">+ Add Visit</a>
+<table>
+  <thead><tr><th>Date</th><th>Reason</th><th>Notes</th><th></th></tr></thead>
+  <tbody>
+    {% for v in p.visits %}
+      <tr>
+        <td>{{ v.visit_date }}</td>
+        <td>{{ decrypt(v.reason_enc) }}</td>
+        <td>{{ decrypt(v.notes_enc) }}</td>
+        <td>
+          <form method="post" action="{{ url_for('visit_delete', pid=p.id, vid=v.id) }}" onsubmit="return confirm('Delete visit?')">
+            <button class="btn danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">No visits yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

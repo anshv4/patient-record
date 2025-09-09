@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ action }} Patient</h2>
+<form method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="grid">
+    <div class="field">{{ form.first_name.label }} {{ form.first_name() }}</div>
+    <div class="field">{{ form.last_name.label }} {{ form.last_name() }}</div>
+    <div class="field">{{ form.dob.label }} {{ form.dob() }}</div>
+    <div class="field">{{ form.gender.label }} {{ form.gender() }}</div>
+    <div class="field full">{{ form.address.label }} {{ form.address(rows=3) }}</div>
+    <div class="field">{{ form.phone.label }} {{ form.phone() }}</div>
+    <div class="field full">{{ form.medical_history.label }} {{ form.medical_history(rows=4) }}</div>
+  </div>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('patients_list') }}">Cancel</a>
+    {{ form.submit(class_="btn primary") }}
+  </div>
+</form>
+{% endblock %}
