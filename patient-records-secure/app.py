@@ -2,11 +2,12 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from datetime import datetime
-from config import Config
-from models import db, User, Patient, Visit
-from forms import LoginForm, PatientForm, VisitForm
-from security import encrypt_field, decrypt_field
-from audit import log_event
+from patient_records_secure.config import Config
+from patient_records_secure.models import db, User, Patient, Visit
+from patient_records_secure.forms import LoginForm, PatientForm, VisitForm
+from patient_records_secure.security import encrypt_field, decrypt_field
+from patient_records_secure.audit import log_event
+
 
 def create_app():
     app = Flask(__name__)
